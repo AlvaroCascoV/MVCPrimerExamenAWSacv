@@ -18,5 +18,15 @@ namespace MVCPrimerExamenAWSacv.Controllers
             List<Zapatilla> zapas = await this.repo.GetZapatillasAsync();
             return View(zapas);
         }
+        public IActionResult Create()
+        {
+            return View();
+        }
+        [HttpPost]
+        public async Task<IActionResult> Create(Zapatilla zapas)
+        {
+            await this.repo.InsertZapatillaAsync(zapas.Nombre, zapas.Descripcion, zapas.Imagen);
+            return RedirectToAction("Index");
+        }
     }
 }
