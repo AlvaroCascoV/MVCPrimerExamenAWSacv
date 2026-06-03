@@ -1,5 +1,9 @@
 ﻿@model List<Zapatilla>
 
+@{
+    string bucketUrl = configuration.GetValue<string>("AWS:BucketUrl");
+}
+
 
 <h1>Zapatillas</h1>
 
@@ -23,7 +27,7 @@
                     <td>@zapatilla.IdProducto</td>
                     <td>@zapatilla.Nombre</td>
                     <td>@zapatilla.Descripcion</td>
-                    <td><img src="@zapatilla.Imagen" alt="@zapatilla.Nombre" style="width: 100px; height: auto;" /></td>
+                    <td><img src="@bucketUrl@zapatilla.Imagen" alt="@zapatilla.Nombre" style="width: 100px; height: auto;" /></td>
                     <td>@zapatilla.Imagen</td>
                     <td>
                         
