@@ -1,7 +1,18 @@
+using Microsoft.EntityFrameworkCore;
+using MVCPrimerExamenAWSacv.Data;
+using MVCPrimerExamenAWSacv.Repositories;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
+
+string connectionString = builder.Configuration.GetConnectionString("AWSMySQL");
+builder.Services.AddDbContext<ZapatillasContext>(options =>
+    options.UseMySQL(connectionString));
+
+builder.Services.AddTransient<RepositoryZapatillas>();
+
 
 var app = builder.Build();
 

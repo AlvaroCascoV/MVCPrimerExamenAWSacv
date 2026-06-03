@@ -1,0 +1,35 @@
+﻿@model List<Zapatilla>
+
+
+<h1>Zapatillas</h1>
+
+@if (Model != null)
+{
+    <table class="table table-bordered">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Nombre</th>
+                <th>Descripcion</th>
+                <th>Imagen</th>
+                <th>Url</th>
+                <th>Acciones</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var zapatilla in Model)
+            {
+                <tr>
+                    <td>@zapatilla.IdProducto</td>
+                    <td>@zapatilla.Nombre</td>
+                    <td>@zapatilla.Descripcion</td>
+                    <td><img src="@zapatilla.Imagen" alt="@zapatilla.Nombre" style="width: 100px; height: auto;" /></td>
+                    <td>@zapatilla.Imagen</td>
+                    <td>
+                        
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
