@@ -1,17 +1,38 @@
-﻿<h1>Create Zapatilla</h1>
+﻿@model Zapatilla
 
-<form method="post">
-    <div class="form-group">
-        <label for="Nombre">Nombre</label>
-        <input type="text" class="form-control" id="Nombre" name="Nombre" required />
+@{
+    ViewData["Title"] = "Nueva Zapatilla";
+}
+
+<div class="container mt-5" style="max-width: 600px;">
+    <div class="card shadow">
+        <div class="card-header bg-primary text-white">
+            <h3 class="mb-0 text-center">Añadir Nueva Zapatilla</h3>
+        </div>
+        <div class="card-body p-4">
+            <form asp-action="Create" method="post" enctype="multipart/form-data">
+
+                <div class="mb-3">
+                    <label class="form-label fw-bold">Nombre del Modelo</label>
+                    <input asp-for="Nombre" class="form-control" placeholder="Ej: Nike Air Max" required />
+                </div>
+
+                <div class="mb-3">
+                    <label class="form-label fw-bold">Descripción / Características</label>
+                    <textarea asp-for="Descripcion" class="form-control" rows="4" placeholder="Escribe detalles del producto..." required></textarea>
+                </div>
+
+                <div class="mb-4">
+                    <label class="form-label fw-bold">Foto de la Zapatilla</label>
+                    <input type="file" name="imagenArchivo" class="form-control" accept="image/*" required />
+                    <div class="form-text">La imagen se subirá directamente al S3 público.</div>
+                </div>
+
+                <div class="d-grid gap-2">
+                    <button type="submit" class="btn btn-success btn-lg">Guardar</button>
+                    <a asp-action="Index" class="btn btn-outline-secondary">Volver al Catálogo</a>
+                </div>
+            </form>
+        </div>
     </div>
-    <div class="form-group">
-        <label for="Descripcion">Descripcion</label>
-        <textarea class="form-control" id="Descripcion" name="Descripcion" required></textarea>
-    </div>
-    <div class="form-group">
-        <label for="Imagen">Imagen (URL)</label>
-        <input type="text" class="form-control" id="Imagen" name="Imagen" required />
-    </div>
-    <button type="submit" class="btn btn-primary">Create</button>
-</form>
+</div>
