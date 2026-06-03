@@ -1,18 +1,41 @@
+using Amazon.S3;
+using ExamenAWSZapatillas.Helpers;
+using ExamenAWSZapatillas.Models;
 using Microsoft.EntityFrameworkCore;
 using MVCPrimerExamenAWSacv.Data;
 using MVCPrimerExamenAWSacv.Repositories;
+using MVCPrimerExamenAWSacv.Services;
+using System.Text.Json;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
 
-string connectionString = builder.Configuration.GetConnectionString("AWSMySQL");
-builder.Services.AddDbContext<ZapatillasContext>(options =>
-    options.UseMySQL(connectionString));
+//string connectionString = builder.Configuration.GetConnectionString("AWSMySQL");
+
 
 builder.Services.AddTransient<RepositoryZapatillas>();
+builder.Services.AddTransient<ServiceStorageS3>();
+builder.Services.AddAWSService<IAmazonS3>(new Amazon.Extensions.NETCore.Setup.AWSOptions
+{
+    Region = Amazon.RegionEndpoint.USEast2
+});
 
+
+string jsonSecret = await HelperSecretManager.GetSecretAsync();
+
+// Deserializamos el JSON usando tu clase KeysModel
+KeysModel keys = JsonSerializer.Deserialize<KeysModel>(jsonSecret, new JsonSerializerOptions
+{
+    PropertyNameCaseInsensitive = true
+});
+builder.Services.AddSingleton(keys);
+
+
+string connectionString = keys.AWSMySQL;
+builder.Services.AddDbContext<ZapatillasContext>(options =>
+    options.UseMySQL(connectionString));
 
 var app = builder.Build();
 
